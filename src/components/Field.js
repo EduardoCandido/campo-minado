@@ -1,12 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, TouchableWithoutFeedback} from 'react-native';
 
 import params from '../params';
 import Mine from './Mine';
 import Flag from './Flag';
 
 
-//Por padrao o componente Field retorna um componente representando um campo de mina fechado
 export default props => {
 
     const { mined, nearMines, opened, exploded, flagged } = props;
@@ -29,20 +28,20 @@ export default props => {
     }
 
     return(
-        <View style={styleField}>
 
-            {/* Exibir o campo aberto com ou sem numero*/}
-            {!mined && opened && nearMines > 0 ? 
-            <Text style={[styles.label, {color: color}]}>
-                {nearMines}
-            </Text>: false }
-            
-            {/* Quando o campo tem mina e é aberto */}
-            {mined && opened ? <Mine/> : false } 
+        <TouchableWithoutFeedback onPress={props.onOpen}>
+            <View style={styleField}>
 
-            {/* Quando quer colocar uma bandeira sinalizando que tem mina */}
-            {flagged && !opened ? <Flag/> : false }
-        </View>
+                {!mined && opened && nearMines > 0 ? <Text style={[styles.label, {color: color}]}>
+                    {nearMines}
+                </Text>: false }
+                
+                {mined && opened ? <Mine/> : false } 
+
+                {flagged && !opened ? <Flag/> : false }
+
+            </View>
+        </TouchableWithoutFeedback>
     )
 }
 
