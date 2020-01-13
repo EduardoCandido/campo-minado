@@ -23,21 +23,19 @@ export default props => {
         if(nearMines == 1) color = '#2A28D7';
         if(nearMines == 2) color = '#2B520F';
         if(nearMines > 2 && nearMines < 6) color = '#F9060A';
-        if(nearMines > 6) color = '#F221A9';
+        if(nearMines => 6) color = '#F221A9';
 
     }
 
     return(
 
-        <TouchableWithoutFeedback onPress={props.onOpen}>
+        <TouchableWithoutFeedback onPress={props.onOpen}
+            onLongPress={props.onSelect} >
             <View style={styleField}>
-
                 {!mined && opened && nearMines > 0 ? <Text style={[styles.label, {color: color}]}>
                     {nearMines}
-                </Text>: false }
-                
+                </Text>: false }               
                 {mined && opened ? <Mine/> : false } 
-
                 {flagged && !opened ? <Flag/> : false }
 
             </View>
@@ -45,7 +43,7 @@ export default props => {
     )
 }
 
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
     field:{
         height: params.blockSize,
         width: params.blockSize,
